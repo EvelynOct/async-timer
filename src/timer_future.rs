@@ -1,3 +1,5 @@
+use futures::FutureExt;
+
 use std::{
     future::Future,
     pin::Pin,

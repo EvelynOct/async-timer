@@ -1,4 +1,5 @@
 mod timer_future;
+use futures::FutureExt;
 
 use timer_future::TimerFuture;
 use futures::{
@@ -86,13 +87,12 @@ fn main() {
     let (executor, spawner) = new_executor_and_spawner();
 
     spawner.spawn(async {
-        println!("howdy!");
+        println!("Evelyn's laptop: howdy!");
 
         TimerFuture::new(Duration::new(2, 0)).await;
 
-        println!("done!");
+        println!("Evelyn's laptop: done!");
     });
-
     drop(spawner);
 
     executor.run();
