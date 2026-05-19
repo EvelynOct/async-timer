@@ -86,15 +86,42 @@ impl Executor {
 fn main() {
     let (executor, spawner) = new_executor_and_spawner();
 
+    // Spawn task 1
     spawner.spawn(async {
-        println!("Evelyn's laptop: howdy!");
+        println!("Evelyn's Laptop: howdy1!");
 
+        // Wait for our timer future to complete after two seconds.
         TimerFuture::new(Duration::new(2, 0)).await;
 
-        println!("Evelyn's laptop: done!");
+        println!("Evelyn's Laptop: done1!");
     });
-    println!("Evelyn's laptop: hey hey");
-    drop(spawner);
 
+    // Spawn task 2
+    spawner.spawn(async {
+        println!("Evelyn's Laptop: howdy2!");
+
+        // Wait for our timer future to complete after two seconds.
+        TimerFuture::new(Duration::new(2, 0)).await;
+
+        println!("Evelyn's Laptop: done2!");
+    });
+
+    // Spawn task 3
+    spawner.spawn(async {
+        println!("Evelyn's Laptop: howdy3!");
+
+        // Wait for our timer future to complete after two seconds.
+        TimerFuture::new(Duration::new(2, 0)).await;
+
+        println!("Evelyn's Laptop: done3!");
+    });
+
+    println!("Evelyn's Laptop: hey hey!");
+
+    // Drop the spawner so that our executor knows it is finished
+    // and won't receive more incoming tasks to run.
+    // drop(spawner);
+
+    // Run the executor until the task queue is empty.
     executor.run();
 }
